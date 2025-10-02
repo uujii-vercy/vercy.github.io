@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vercy - 未来を創るアプリ開発</title>
+    <!-- Tailwind CSS CDNをロード -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Iconsをロード -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* フォント設定と基本スタイル */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background-color: #f7f8f9; /* わずかにオフホワイトの背景 */
+        }
+        .container {
+            max-width: 1280px;
+        }
+        /* スムーズスクロール */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Vercyのメインカラー（青系）を定義
+                        'vercy-blue': {
+                            '50': '#ebf5ff',
+                            '100': '#d0e5ff',
+                            '200': '#a8d1ff',
+                            '300': '#71b6ff',
+                            '400': '#3b94ff',
+                            '500': '#0070f3', /* メインの青色 */
+                            '600': '#005edb',
+                            '700': '#004aa6',
+                            '800': '#003370',
+                            '900': '#001a3b',
+                            '950': '#000c1e',
+                        },
+                    }
+                }
+            }
+        }
+
+        // --- JavaScript for navigation (アイコンの初期化とスムーズスクロール) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lucide Iconsを置き換え
+            lucide.createIcons();
+
+            // スムーズスクロールとナビゲーションの動作
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const hash = this.getAttribute('href');
+                    if (hash === '#') return; // トップページリンクは除外
+                    
+                    e.preventDefault();
+                    const targetElement = document.querySelector(hash);
+                    if (targetElement) {
+                        // ヘッダーの高さを考慮してスクロール位置を調整
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = targetElement.offsetTop - headerHeight - 20; 
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // モバイルメニューのトグル
+            const menuButton = document.getElementById('menuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            // モバイルメニューのリンクをクリックしたらメニューを閉じる
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+</head>
+<body class="text-gray-800">
+
+    <!-- ヘッダーとナビゲーション -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+            <!-- ロゴ -->
+            <a href="#" class="flex items-center space-x-2">
+                <i data-lucide="zap" class="w-8 h-8 text-vercy-blue-500"></i>
+                <span class="text-2xl font-bold text-gray-800">Vercy</span>
+            </a>
+
+            <!-- デスクトップナビゲーション -->
+            <nav class="hidden md:flex space-x-6 text-gray-600 font-semibold">
+                <a href="#services" class="hover:text-vercy-blue-500 transition duration-150">サービス</a>
+                <a href="#features" class="hover:text-vercy-blue-500 transition duration-150">Vercyが選ばれる理由</a>
+                <a href="#contact" class="hover:text-vercy-blue-500 transition duration-150">お問い合わせ</a>
+            </nav>
+
+            <!-- CTAボタン (デスクトップ) -->
+            <a href="#contact" class="hidden md:block bg-vercy-blue-500 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-vercy-blue-600 transition duration-300 transform hover:scale-105 font-semibold">
+                無料相談を始める
+            </a>
+
+            <!-- モバイルメニューボタン -->
+            <button id="menuButton" class="md:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition duration-150">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- モバイルナビゲーション (トグル) -->
+        <nav id="mobileMenu" class="md:hidden hidden pb-2 bg-white border-t border-gray-100 shadow-lg">
+            <a href="#services" class="block px-6 py-3 text-gray-700 hover:bg-vercy-blue-50 hover:text-vercy-blue-600 transition duration-150 border-b">サービス</a>
+            <a href="#features" class="block px-6 py-3 text-gray-700 hover:bg-vercy-blue-50 hover:text-vercy-blue-600 transition duration-150 border-b">Vercyが選ばれる理由</a>
+            <a href="#contact" class="block px-6 py-3 text-gray-700 hover:bg-vercy-blue-50 hover:text-vercy-blue-600 transition duration-150">お問い合わせ</a>
+            <a href="#contact" class="block mx-4 my-2 text-center bg-vercy-blue-500 text-white px-4 py-2 rounded-xl shadow-md hover:bg-vercy-blue-600 transition duration-300 font-semibold">無料相談を始める</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ヒーローセクション -->
+        <section class="bg-vercy-blue-50 py-16 md:py-24 text-center" id="home">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-vercy-blue-600 font-bold mb-3 uppercase tracking-wider text-sm md:text-base">アプリ開発のエキスパート</p>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight text-gray-900">
+                    未来のアプリを<br class="md:hidden">今日、実現する。
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                    あなたのビジネスを加速させる、ユーザー体験を最優先した革新的なモバイル・ウェブアプリケーションを開発します。
+                </p>
+                <a href="#contact" class="inline-flex items-center justify-center bg-vercy-blue-500 text-white px-8 py-3 text-lg rounded-xl shadow-xl hover:bg-vercy-blue-600 transition duration-300 transform hover:scale-105 font-bold">
+                    <i data-lucide="send" class="w-5 h-5 mr-2"></i>
+                    プロジェクトを相談する
+                </a>
+            </div>
+        </section>
+
+        <!-- サービスセクション -->
+        <section class="py-16 md:py-24" id="services">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Vercyの主なサービス</h2>
+                <p class="text-lg text-center text-gray-600 mb-12 max-w-2xl mx-auto">アイデアを形にし、市場で成功を収めるための包括的なソリューションを提供します。</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- サービスカード 1: モバイルアプリ -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-vercy-blue-500 transition duration-300 hover:shadow-2xl">
+                        <div class="mb-4 inline-block p-3 rounded-full bg-vercy-blue-100 text-vercy-blue-600">
+                            <i data-lucide="smartphone" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">モバイルアプリ開発</h3>
+                        <p class="text-gray-600">iOS (Swift, SwiftUI) および Android (Kotlin, Jetpack Compose) のネイティブ開発に加え、クロスプラットフォーム (React Native, Flutter) にも対応。高品質なアプリを提供します。</p>
+                    </div>
+
+                    <!-- サービスカード 2: ウェブアプリ -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-vercy-blue-500 transition duration-300 hover:shadow-2xl">
+                        <div class="mb-4 inline-block p-3 rounded-full bg-vercy-blue-100 text-vercy-blue-600">
+                            <i data-lucide="monitor" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">Webアプリケーション開発</h3>
+                        <p class="text-gray-600">スケーラブルなバックエンドと、React、Vue、Angularなどのモダンなフレームワークを用いたフロントエンドを統合し、強力なWebサービスを構築します。</p>
+                    </div>
+
+                    <!-- サービスカード 3: UI/UXデザイン -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-vercy-blue-500 transition duration-300 hover:shadow-2xl">
+                        <div class="mb-4 inline-block p-3 rounded-full bg-vercy-blue-100 text-vercy-blue-600">
+                            <i data-lucide="palette" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">UI/UXデザイン</h3>
+                        <p class="text-gray-600">ユーザー中心設計を徹底し、使いやすく、直感的で、ブランドイメージに合った美しいインターフェースをデザインします。成功するアプリはデザインから始まります。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vercyが選ばれる理由セクション (Features) -->
+        <section class="bg-vercy-blue-900 py-16 md:py-24 text-white" id="features">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-4">Vercyを選ぶべき理由</h2>
+                <p class="text-lg text-center text-vercy-blue-100 mb-12 max-w-2xl mx-auto">確かな技術力と柔軟な対応で、お客様のプロジェクトを成功に導きます。</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- 理由カード 1 -->
+                    <div class="text-center p-6 rounded-lg bg-vercy-blue-800 shadow-xl">
+                        <i data-lucide="rocket" class="w-10 h-10 mx-auto mb-4 text-vercy-blue-300"></i>
+                        <h3 class="text-xl font-bold mb-2">アジャイルな高速開発</h3>
+                        <p class="text-vercy-blue-200">最新のアジャイル手法を採用し、短期間で高品質なプロトタイプを提供。市場の変化に迅速に対応します。</p>
+                    </div>
+
+                    <!-- 理由カード 2 -->
+                    <div class="text-center p-6 rounded-lg bg-vercy-blue-800 shadow-xl">
+                        <i data-lucide="check-check" class="w-10 h-10 mx-auto mb-4 text-vercy-blue-300"></i>
+                        <h3 class="text-xl font-bold mb-2">最高水準の品質保証</h3>
+                        <p class="text-vercy-blue-200">厳格なコードレビューとテストプロセスにより、バグが少なく、安定性に優れた、長期的に運用可能なプロダクトを保証します。</p>
+                    </div>
+
+                    <!-- 理由カード 3 -->
+                    <div class="text-center p-6 rounded-lg bg-vercy-blue-800 shadow-xl">
+                        <i data-lucide="users" class="w-10 h-10 mx-auto mb-4 text-vercy-blue-300"></i>
+                        <h3 class="text-xl font-bold mb-2">専任チームによる手厚いサポート</h3>
+                        <p class="text-vercy-blue-200">開発フェーズだけでなく、リリース後の運用・改善・機能追加まで、専任のプロフェッショナルチームが伴走します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTAセクション (フッターの上) -->
+        <section class="py-16 md:py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center bg-white p-8 rounded-2xl shadow-2xl border border-gray-100">
+                <h2 class="text-3xl font-bold mb-4 text-gray-900">あなたのアイデアを実現しませんか？</h2>
+                <p class="text-xl text-gray-600 mb-8">まずは無料相談から、お気軽にご連絡ください。</p>
+                <a href="#contact" class="inline-flex items-center justify-center bg-vercy-blue-500 text-white px-10 py-4 text-xl rounded-xl shadow-xl hover:bg-vercy-blue-600 transition duration-300 transform hover:scale-105 font-bold">
+                    <i data-lucide="mail" class="w-6 h-6 mr-2"></i>
+                    お問い合わせはこちら
+                </a>
+            </div>
+        </section>
+
+        <!-- お問い合わせフォームセクション -->
+        <section class="py-16 md:py-24 bg-gray-50" id="contact">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                <h2 class="text-3xl font-bold text-center mb-10 text-gray-900">お問い合わせ</h2>
+                
+                <form class="bg-white p-8 md:p-10 rounded-2xl shadow-2xl border border-gray-100">
+                    <div class="mb-6">
+                        <label for="name" class="block text-gray-700 font-medium mb-2">お名前 <span class="text-red-500">*</span></label>
+                        <input type="text" id="name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-vercy-blue-500 transition duration-150">
+                    </div>
+                    <div class="mb-6">
+                        <label for="email" class="block text-gray-700 font-medium mb-2">メールアドレス <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-vercy-blue-500 transition duration-150">
+                    </div>
+                    <div class="mb-6">
+                        <label for="subject" class="block text-gray-700 font-medium mb-2">件名</label>
+                        <input type="text" id="subject" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-vercy-blue-500 transition duration-150">
+                    </div>
+                    <div class="mb-8">
+                        <label for="message" class="block text-gray-700 font-medium mb-2">お問い合わせ内容 <span class="text-red-500">*</span></label>
+                        <textarea id="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-vercy-blue-500 transition duration-150"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-vercy-blue-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-vercy-blue-600 transition duration-300 transform hover:scale-[1.01] font-bold text-lg">
+                        送信する
+                    </button>
+                    <p class="text-xs text-center text-gray-500 mt-4">（このフォームはデモ用のため、実際には送信されません。）</p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-gray-700 pb-8 mb-8">
+                <!-- 会社情報 -->
+                <div class="md:col-span-1">
+                    <a href="#" class="flex items-center space-x-2 mb-4">
+                        <i data-lucide="zap" class="w-6 h-6 text-vercy-blue-400"></i>
+                        <span class="text-xl font-bold">Vercy</span>
+                    </a>
+                    <p class="text-gray-400 text-sm">未来志向の技術で、ビジネスの可能性を最大限に引き出します。</p>
+                </div>
+                
+                <!-- リンク -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-vercy-blue-300">クイックリンク</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#services" class="text-gray-400 hover:text-vercy-blue-400 transition">サービス</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-vercy-blue-400 transition">Vercyについて</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-vercy-blue-400 transition">お問い合わせ</a></li>
+                    </ul>
+                </div>
+
+                <!-- 連絡先 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-vercy-blue-300">連絡先</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <!--<li><i data-lucide="phone" class="inline-block w-4 h-4 mr-2"></i>+8170 4409 9409 (代表)</li> -->
+                        <li><i data-lucide="mail" class="inline-block w-4 h-4 mr-2"></i>vercy.app@gmail.com</li>
+                        <li><i data-lucide="map-pin" class="inline-block w-4 h-4 mr-2"></i>神奈川県横浜市</li>
+                    </ul>
+                </div>
+
+                <!-- ソーシャル -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-vercy-blue-300">SNS</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/uujii-vercy" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-vercy-blue-400 transition transform hover:scale-110">
+                            <i data-lucide="github" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 著作権表示 -->
+            <div class="text-center text-sm text-gray-500 pt-4">
+                &copy; 2025 Vercy, Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
