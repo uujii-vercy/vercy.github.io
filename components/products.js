@@ -54,10 +54,10 @@ function generateProductCards() {
 
     const cardsHtml = productsData.map(product => `
         <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-vercy-blue-500 transition duration-300 hover:shadow-2xl">
-            <div class="mb-4 inline-block p-3 rounded-full bg-vercy-blue-100 text-vercy-blue-600">
-                <img src="${product.icon}" class="w-8 h-8 rounded-full" alt="${product.title} icon">
+            <div class="flex items-center mb-4">
+                <img src="${product.icon}" class="w-8 h-8 rounded-lg mr-4" alt="${product.title} icon">
+                <h3 class="text-xl font-bold text-gray-900">${product.title}</h3>
             </div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">${product.title}</h3>
             <p class="text-gray-600 mb-4">${product.description}</p>
             <a href="${product.link}" class="text-vercy-blue-500 hover:text-vercy-blue-600 font-semibold">詳細を見る →</a>
         </div>
