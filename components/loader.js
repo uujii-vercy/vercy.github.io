@@ -19,6 +19,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // コンポーネントロード後にJavaScriptを実行
     initializeHeader();
+    
+    // products.htmlの場合、プロダクトカードを生成
+    if (document.getElementById('products-grid')) {
+        // products.jsを動的にロード
+        const script = document.createElement('script');
+        script.src = 'components/products.js';
+        script.onload = () => {
+            generateProductCards();
+        };
+        document.head.appendChild(script);
+    }
 });
 
 // ヘッダーの初期化関数
