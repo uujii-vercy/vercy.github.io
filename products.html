@@ -48,86 +48,13 @@
             }
         }
 
-        // --- JavaScript for navigation (アイコンの初期化とスムーズスクロール) ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Lucide Iconsを置き換え
-            lucide.createIcons();
-
-            // スムーズスクロールとナビゲーションの動作
-            const navLinks = document.querySelectorAll('a[href^="#"]');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const hash = this.getAttribute('href');
-                    if (hash === '#') return; // トップページリンクは除外
-                    
-                    e.preventDefault();
-                    const targetElement = document.querySelector(hash);
-                    if (targetElement) {
-                        // ヘッダーの高さを考慮してスクロール位置を調整
-                        const headerHeight = document.querySelector('header').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight - 20; 
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // モバイルメニューのトグル
-            const menuButton = document.getElementById('menuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            // モバイルメニューのリンクをクリックしたらメニューを閉じる
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        });
     </script>
 </head>
 <body class="text-gray-800">
 
-    <!-- ヘッダーとナビゲーション -->
-    <header class="sticky top-0 z-50 bg-white shadow-md">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
-            <!-- ロゴ -->
-            <a href="index.html" class="flex items-center space-x-2">
-                <i data-lucide="zap" class="w-8 h-8 text-vercy-blue-500"></i>
-                <span class="text-2xl font-bold text-gray-800">Vercy</span>
-            </a>
+    <div id="header-placeholder"></div>
 
-            <!-- デスクトップナビゲーション -->
-            <nav class="hidden md:flex space-x-6 text-gray-600 font-semibold">
-                <a href="products.html" class="hover:text-vercy-blue-500 transition duration-150">プロダクト</a>
-                <a href="index.html#features" class="hover:text-vercy-blue-500 transition duration-150">Vercyが選ばれる理由</a>
-                <a href="index.html#contact" class="hover:text-vercy-blue-500 transition duration-150">お問い合わせ</a>
-            </nav>
-
-            <!-- CTAボタン (デスクトップ) -->
-            <a href="index.html#contact" class="hidden md:block bg-vercy-blue-500 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-vercy-blue-600 transition duration-300 transform hover:scale-105 font-semibold">
-                無料相談を始める
-            </a>
-
-            <!-- モバイルメニューボタン -->
-            <button id="menuButton" class="md:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition duration-150">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
-        </div>
-
-        <!-- モバイルナビゲーション (トグル) -->
-        <nav id="mobileMenu" class="md:hidden hidden pb-2 bg-white border-t border-gray-100 shadow-lg">
-            <a href="products.html" class="block px-6 py-3 text-gray-700 hover:bg-vercy-blue-50 hover:text-vercy-blue-600 transition duration-150 border-b">プロダクト</a>
-            <a href="index.html#features" class="block px-6 py-3 text-gray-700 hover:bg-vercy-blue-50 hover:text-vercy-blue-600 transition duration-150 border-b">Vercyが選ばれる理由</a>
-            <a href="index.html#contact" class="block px-6 py-3 text-gray-700 hover:bg-vercy-blue-50 hover:text-vercy-blue-600 transition duration-150">お問い合わせ</a>
-            <a href="index.html#contact" class="block mx-4 my-2 text-center bg-vercy-blue-500 text-white px-4 py-2 rounded-xl shadow-md hover:bg-vercy-blue-600 transition duration-300 font-semibold">無料相談を始める</a>
-        </nav>
-    </header>
-
-    <main>
+    <main class="pt-16">
         <!-- プロダクト一覧セクション -->
         <section class="py-16 md:py-24" id="products">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -212,56 +139,8 @@
 
     </main>
 
-    <!-- フッター -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-gray-700 pb-8 mb-8">
-                <!-- 会社情報 -->
-                <div class="md:col-span-1">
-                    <a href="index.html" class="flex items-center space-x-2 mb-4">
-                        <i data-lucide="zap" class="w-6 h-6 text-vercy-blue-400"></i>
-                        <span class="text-xl font-bold">Vercy</span>
-                    </a>
-                    <p class="text-gray-400 text-sm">未来志向の技術で、ビジネスの可能性を最大限に引き出します。</p>
-                </div>
-                
-                <!-- リンク -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 text-vercy-blue-300">クイックリンク</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="privacy.html" class="text-gray-400 hover:text-vercy-blue-400 transition">プライバシー・ポリシー</a></li>
-                        <li><a href="index.html#features" class="text-gray-400 hover:text-vercy-blue-400 transition">Vercyについて</a></li>
-                        <li><a href="index.html#contact" class="text-gray-400 hover:text-vercy-blue-400 transition">お問い合わせ</a></li>
-                    </ul>
-                </div>
+    <div id="footer-placeholder"></div>
 
-                <!-- 連絡先 -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 text-vercy-blue-300">連絡先</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <!--<li><i data-lucide="phone" class="inline-block w-4 h-4 mr-2"></i>+8170 4409 9409 (代表)</li> -->
-                        <li><i data-lucide="mail" class="inline-block w-4 h-4 mr-2"></i>vercy.app@gmail.com</li>
-                        <li><i data-lucide="map-pin" class="inline-block w-4 h-4 mr-2"></i>神奈川県横浜市</li>
-                    </ul>
-                </div>
-
-                <!-- ソーシャル -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 text-vercy-blue-300">SNS</h4>
-                    <div class="flex space-x-4">
-                        <a href="https://github.com/uujii-vercy" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-vercy-blue-400 transition transform hover:scale-110">
-                            <i data-lucide="github" class="w-6 h-6"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-                <!-- 著作権表示 -->
-            <div class="text-center text-sm text-gray-500 pt-4">
-                &copy; 2025 Vercy, Inc. All rights reserved.
-            </div>
-        </div>
-    </footer>
-
+    <script src="components/loader.js"></script>
 </body>
 </html>
